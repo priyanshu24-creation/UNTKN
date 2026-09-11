@@ -1,0 +1,2 @@
+- [x] Remove monkey from account creation page
+- [x] Restore a simple, classy registration layout

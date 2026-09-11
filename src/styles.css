@@ -1,0 +1,358 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * UNTKN — editorial fashion design system.
+ * Palette: ink (near-black), paper (warm off-white), sand (neutral), line (hairline).
+ * All colors in oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
+  --radius-3xl: 2px;
+  --radius-4xl: 2px;
+
+  --font-display: "Archivo", "Helvetica Neue", sans-serif;
+  --font-sans: "Inter Tight", "Helvetica Neue", sans-serif;
+  --font-editorial: "Instrument Serif", Georgia, serif;
+  --font-fashion: "Work Sans", "Helvetica Neue", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-sand: var(--sand);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-gallery: var(--gallery);
+  --color-gallery-ink: var(--gallery-ink);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0px;
+  --ink: oklch(0.24 0.13 300);
+  --paper: oklch(0.995 0.002 300);
+  --sand: oklch(0.945 0.028 300);
+  --gallery: oklch(0.965 0.003 95);
+  --gallery-ink: oklch(0.205 0 0);
+  --shadow-editorial: 0 20px 50px color-mix(in oklab, var(--gallery-ink) 5%, transparent);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--ink);
+  --primary: oklch(0.42 0.21 300);
+  --primary-foreground: oklch(0.995 0.002 300);
+  --secondary: var(--sand);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.968 0.014 300);
+  --muted-foreground: oklch(0.53 0.05 300);
+  --accent: oklch(0.93 0.045 300);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.51 0.17 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.9 0.025 300);
+  --input: oklch(0.9 0.025 300);
+  --ring: oklch(0.55 0.19 300);
+  --chart-1: oklch(0.42 0.21 300);
+  --chart-2: oklch(0.55 0.18 300);
+  --chart-3: oklch(0.66 0.14 300);
+  --chart-4: oklch(0.78 0.1 300);
+  --chart-5: oklch(0.88 0.06 300);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: oklch(0.42 0.21 300);
+  --sidebar-primary-foreground: oklch(0.995 0.002 300);
+  --sidebar-accent: var(--sand);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: oklch(0.9 0.025 300);
+  --sidebar-ring: oklch(0.55 0.19 300);
+}
+
+.dark {
+  --background: oklch(0.16 0.05 300);
+  --foreground: oklch(0.98 0.004 300);
+  --card: oklch(0.21 0.06 300);
+  --card-foreground: oklch(0.98 0.004 300);
+  --popover: oklch(0.21 0.06 300);
+  --popover-foreground: oklch(0.98 0.004 300);
+  --primary: oklch(0.72 0.16 300);
+  --primary-foreground: oklch(0.16 0.05 300);
+  --secondary: oklch(0.26 0.07 300);
+  --secondary-foreground: oklch(0.98 0.004 300);
+  --muted: oklch(0.26 0.07 300);
+  --muted-foreground: oklch(0.74 0.05 300);
+  --accent: oklch(0.3 0.09 300);
+  --accent-foreground: oklch(0.98 0.004 300);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.6 0.006 75);
+  --sidebar: oklch(0.18 0.003 60);
+  --sidebar-foreground: oklch(0.965 0.003 85);
+  --sidebar-border: oklch(1 0 0 / 14%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 350;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
+
+/* ---- Editorial utilities ---- */
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  font-size: clamp(2.25rem, 8.5vw, 8rem);
+  text-transform: uppercase;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-size: clamp(1.75rem, 5.5vw, 4.5rem);
+  text-transform: uppercase;
+}
+
+@utility display-md {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-size: clamp(1.25rem, 3vw, 2.5rem);
+  text-transform: uppercase;
+}
+
+/* Animated underline for editorial links */
+@utility link-underline {
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@utility reveal-init {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@utility image-veil {
+  overflow: hidden;
+
+  & img {
+    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover img {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes veil-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@utility animate-rise {
+  animation: rise-in 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-veil {
+  animation: veil-up 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Account pages share these names so the image and form exchange places smoothly. */
+.auth-card {
+  view-transition-name: auth-card;
+}
+
+.auth-visual {
+  view-transition-name: auth-visual;
+}
+
+.auth-panel {
+  view-transition-name: auth-panel;
+}
+
+::view-transition-group(auth-card),
+::view-transition-group(auth-visual),
+::view-transition-group(auth-panel) {
+  animation-duration: 720ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(auth-panel),
+::view-transition-old(auth-visual) {
+  animation: auth-fade-out 280ms ease-in both;
+}
+
+::view-transition-new(auth-panel),
+::view-transition-new(auth-visual) {
+  animation: auth-fade-in 520ms 140ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes auth-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes auth-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Marquee ticker ---- */
+@keyframes marquee-slide {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility marquee-track {
+  display: inline-flex;
+  min-width: 200%;
+  animation: marquee-slide 34s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
