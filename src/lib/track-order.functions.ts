@@ -27,7 +27,7 @@ export interface TrackedOrder {
 }
 
 export const trackOrder = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => inputSchema.parse(data))
+  .validator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }): Promise<TrackedOrder | null> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 

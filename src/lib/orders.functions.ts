@@ -47,7 +47,7 @@ export const FREE_SHIPPING_ABOVE = 2499;
 export const COD_FEE = 49;
 
 export const placeOrder = createServerFn({ method: "POST" })
-  .inputValidator((data: unknown) => inputSchema.parse(data))
+  .validator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
