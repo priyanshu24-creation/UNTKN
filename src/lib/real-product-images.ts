@@ -1,21 +1,14 @@
-import editorial1 from "@/assets/editorial-1.jpg";
-import editorial2 from "@/assets/editorial-2.jpg";
-import hero from "@/assets/hero.jpg";
-import model1 from "@/assets/model-1.jpg";
-import model2 from "@/assets/model-2.jpg";
-import story from "@/assets/story.jpg";
-import p1 from "@/assets/p1.jpg";
-import p4 from "@/assets/p4.jpg";
+import { productImageUrl } from "@/lib/store-products";
 
 export const realProductImages = {
-  miseryProduct: p1,
-  miseryPortrait: hero,
-  miserySeated: model1,
-  miseryWall: editorial1,
-  miseryOverhead: story,
-  dragonProduct: p4,
-  dragonGraffiti: editorial2,
-  dragonStairs: model2,
+  miseryProduct: productImageUrl("real-products/misery-world-product-front.jpeg"),
+  miseryPortrait: productImageUrl("real-products/misery-world-lifestyle-portrait.jpeg"),
+  miserySeated: productImageUrl("real-products/misery-world-lifestyle-seated.jpeg"),
+  miseryWall: productImageUrl("real-products/misery-world-lifestyle-wall.jpeg"),
+  miseryOverhead: productImageUrl("real-products/misery-world-lifestyle-overhead.jpeg"),
+  dragonProduct: productImageUrl("real-products/dragon-flame-product-front.jpeg"),
+  dragonGraffiti: productImageUrl("real-products/dragon-flame-lifestyle-graffiti.jpeg"),
+  dragonStairs: productImageUrl("real-products/dragon-flame-lifestyle-stairs.jpeg"),
 } as const;
 
 export const realProductGallery = Object.values(realProductImages);

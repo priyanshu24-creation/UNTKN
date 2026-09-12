@@ -6,6 +6,16 @@ import { fileURLToPath } from "node:url";
 import { Readable } from "node:stream";
 import { resolve, sep } from "node:path";
 
+try {
+  process.loadEnvFile?.();
+} catch {
+  try {
+    process.loadEnvFile?.(fileURLToPath(new URL("../../.env", import.meta.url)));
+  } catch {
+    // Environment variables might already be present in process.env
+  }
+}
+
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 

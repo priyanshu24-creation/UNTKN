@@ -20,6 +20,9 @@ export const Route = createFileRoute("/api/public/product-image")({
           .download(path);
 
         if (error || !data) {
+          if (error) {
+            console.error(`[product-image] Failed to download "${path}":`, error);
+          }
           return new Response("Not found", { status: 404 });
         }
 
