@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import editorialImage from "@/assets/editorial-1.jpg";
+import { realProductImages } from "@/lib/real-product-images";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({
@@ -124,8 +124,8 @@ function ForgotPassword() {
 
           <div className="auth-visual relative hidden min-h-[560px] overflow-hidden bg-secondary md:block">
             <img
-              src={editorialImage}
-              alt="Model wearing a cream knit and tailored black trousers"
+              src={realProductImages.miserySeated}
+              alt="Man wearing the real Misery World graphic long-sleeve shirt"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
           </div>

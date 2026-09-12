@@ -44,8 +44,8 @@ export function Header({ overHero = false }: { overHero?: boolean }) {
         )}
       >
         <Marquee />
-        <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 md:h-20 md:px-10">
-          <div className="flex items-center gap-2 md:flex-1">
+        <div className="mx-auto grid h-16 max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center px-5 md:flex md:h-20 md:px-10">
+          <div className="flex min-w-0 items-center gap-2 md:flex-1">
             <button
               type="button"
               className="-ml-2 p-2 md:hidden"
@@ -54,7 +54,7 @@ export function Header({ overHero = false }: { overHero?: boolean }) {
             >
               <Menu className="h-5 w-5" strokeWidth={1.2} />
             </button>
-            <Link to="/" className="font-display text-sm tracking-[0.32em] md:text-base">
+            <Link to="/" className="truncate font-display text-sm tracking-[0.32em] md:text-base">
               {BRAND.name}
             </Link>
           </div>
@@ -72,7 +72,7 @@ export function Header({ overHero = false }: { overHero?: boolean }) {
             ))}
           </nav>
 
-          <div className="flex items-center justify-end gap-1 md:flex-1 md:gap-3">
+          <div className="flex shrink-0 items-center justify-end gap-1 md:flex-1 md:gap-3">
             <button
               type="button"
               onClick={() => setSearchOpen(true)}

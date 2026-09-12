@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/Reveal";
-import { editorialImages } from "@/data/catalog";
-import hero from "@/assets/hero.jpg";
+import { realProductImages } from "@/lib/real-product-images";
 
 export const Route = createFileRoute("/lookbook")({
   head: () => ({
@@ -10,14 +9,15 @@ export const Route = createFileRoute("/lookbook")({
       { title: "Lookbook AW26 — UNTKN" },
       {
         name: "description",
-        content:
-          "The UNTKN Autumn/Winter 2026 lookbook: volume, natural fibre and daylight, photographed unstyled.",
+        content: "Real UNTKN clothing photographed on location.",
       },
       { property: "og:title", content: "Lookbook AW26 — UNTKN" },
       {
         property: "og:description",
-        content: "Volume, natural fibre and daylight — the AW26 lookbook.",
+        content: "Real UNTKN clothing photographed on location.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Lookbook,
@@ -25,22 +25,22 @@ export const Route = createFileRoute("/lookbook")({
 
 const SPREADS = [
   {
-    image: editorialImages.editorial1,
-    eyebrow: "Look 01",
-    title: "Undyed lambswool",
-    copy: "A rib knit worn against fluid tailoring. Nothing pressed, nothing forced.",
+    image: realProductImages.miseryPortrait,
+    eyebrow: "Real look 01",
+    title: "Graphic long sleeve",
+    copy: "Original UNTKN clothing photographed in natural light.",
   },
   {
-    image: editorialImages.editorial2,
-    eyebrow: "Look 02",
-    title: "City nylon",
-    copy: "Technical outerwear in matte black, softened by a washed cotton cargo.",
+    image: realProductImages.dragonGraffiti,
+    eyebrow: "Real look 02",
+    title: "Dragon artwork",
+    copy: "The real garment worn against a hand-painted street-art backdrop.",
   },
   {
-    image: editorialImages.story,
-    eyebrow: "Look 03",
-    title: "Resting cloth",
-    copy: "Fabric photographed before cutting — the origin of every piece we make.",
+    image: realProductImages.miseryWall,
+    eyebrow: "Real look 03",
+    title: "Misery World artwork",
+    copy: "The real garment shown in a full-length on-location photograph.",
   },
 ];
 
@@ -49,8 +49,8 @@ function Lookbook() {
     <SiteLayout flush>
       <section className="relative h-[70svh] min-h-[420px] overflow-hidden">
         <img
-          src={hero}
-          alt="Editorial campaign image"
+          src={realProductImages.dragonStairs}
+          alt="UNTKN dragon graphic long-sleeve shirt worn on stairs"
           width={1920}
           height={1280}
           className="animate-veil h-full w-full object-cover"

@@ -8,8 +8,8 @@ import type { Address, CartLine, Order } from "@/lib/types";
  * and then polls/receives the *server-verified* status. Webhook verification on
  * the server is the only source of truth for `paymentStatus`.
  *
- * The server functions in payments.functions.ts implement the Razorpay flow;
- * these types remain the provider-neutral boundary for future gateways:
+ * Today these functions are local stubs so the UI can be exercised; each one
+ * maps 1:1 to a server endpoint to implement when the backend is connected:
  *
  *   createDraftOrder  -> POST /api/orders            (reserves variant stock in a transaction)
  *   createPaymentIntent -> POST /api/payments/intent (Razorpay/Stripe/Cashfree/PayU)

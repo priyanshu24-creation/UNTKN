@@ -6,7 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { SocialAuthButtons } from "@/components/auth/SocialAuthButtons";
 import { supabase } from "@/integrations/supabase/client";
-import editorialImage from "@/assets/editorial-1.jpg";
+import { realProductImages } from "@/lib/real-product-images";
 
 export const Route = createFileRoute("/register")({
   head: () => ({
@@ -146,12 +146,12 @@ function Register() {
 
           <div className="auth-visual relative hidden min-h-[660px] overflow-hidden bg-secondary md:block">
             <img
-              src={editorialImage}
-              alt="Model wearing a cream knit and tailored black trousers"
+              src={realProductImages.dragonGraffiti}
+              alt="Man wearing the real dragon and flame graphic long-sleeve shirt"
               className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-1000 ease-out hover:scale-[1.015]"
             />
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-gallery-ink/55 to-transparent px-7 pb-7 pt-24 text-primary-foreground">
-              <p className="text-[10px] font-medium uppercase">The knit edit · 2026</p>
+              <p className="text-[10px] font-medium uppercase">Original UNTKN photography</p>
               <Link to="/shop" className="text-[10px] uppercase underline underline-offset-4">Discover</Link>
             </div>
           </div>

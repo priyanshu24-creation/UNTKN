@@ -98,15 +98,19 @@ export function Footer() {
             © {new Date().getFullYear()} {BRAND.short}. All rights reserved.
           </p>
           <div className="flex gap-6">
-            {["Instagram", "Pinterest", "Youtube"].map((s) => (
+            {[
+              { label: "Instagram", href: "https://www.instagram.com/untknofficialstore/" },
+              { label: "Pinterest", href: "#" },
+              { label: "Youtube", href: "#" },
+            ].map((s) => (
               <a
-                key={s}
-                href="https://instagram.com"
+                key={s.label}
+                href={s.href}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="eyebrow link-underline"
               >
-                {s}
+                {s.label}
               </a>
             ))}
           </div>

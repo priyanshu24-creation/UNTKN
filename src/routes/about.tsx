@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/Reveal";
-import { BRAND, editorialImages } from "@/data/catalog";
+import { BRAND } from "@/data/catalog";
+import { realProductImages } from "@/lib/real-product-images";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -17,6 +18,8 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "Our making process, shipping, returns and contact details.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: About,
@@ -55,8 +58,8 @@ function About() {
         <div className="mt-16 grid gap-14 md:grid-cols-2 md:gap-20">
           <Reveal className="image-veil">
             <img
-              src={editorialImages.story}
-              alt="Folded garments on a plaster surface"
+              src={realProductImages.miseryPortrait}
+              alt="UNTKN graphic long-sleeve shirt worn beside a window"
               loading="lazy"
               className="aspect-[4/3] w-full object-cover"
             />

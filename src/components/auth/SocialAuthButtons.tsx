@@ -59,7 +59,7 @@ export function SocialAuthButtons({ label = "or continue with" }: { label?: stri
   const signIn = async (provider: Provider) => {
     setPending(provider);
     const { error } = await supabase.auth.signInWithOAuth({
-      provider,
+      provider: provider === "microsoft" ? "azure" : provider,
       options: {
         redirectTo: `${window.location.origin}/account`,
       },
@@ -67,7 +67,6 @@ export function SocialAuthButtons({ label = "or continue with" }: { label?: stri
     if (error) {
       setPending(null);
       toast.error(error.message ?? "Sign-in failed. Please try again.");
-      return;
     }
   };
 

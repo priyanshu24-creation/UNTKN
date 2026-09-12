@@ -8,7 +8,7 @@ import { getProductById } from "@/data/catalog";
 import { currency, formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { useShop } from "@/store/shop";
-import editorialImage from "@/assets/editorial-1.jpg";
+import { realProductImages } from "@/lib/real-product-images";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -49,8 +49,8 @@ function Account() {
             </div>
             <div className="auth-visual relative hidden min-h-[660px] overflow-hidden bg-secondary md:block">
               <img
-                src={editorialImage}
-                alt="Model wearing a cream knit and tailored black trousers"
+                src={realProductImages.miseryPortrait}
+                alt="Man wearing the real Misery World graphic long-sleeve shirt"
                 className="absolute inset-0 h-full w-full object-cover object-center"
               />
             </div>
@@ -249,8 +249,8 @@ function Account() {
 
           <div className="auth-visual relative hidden min-h-[720px] overflow-hidden bg-secondary md:block">
             <img
-              src={editorialImage}
-              alt="Model wearing a cream knit and tailored black trousers"
+              src={realProductImages.miseryPortrait}
+              alt="Man wearing the real Misery World graphic long-sleeve shirt"
               className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-1000 ease-out hover:scale-[1.015]"
             />
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-gallery-ink/55 to-transparent px-7 pb-7 pt-24 text-primary-foreground">

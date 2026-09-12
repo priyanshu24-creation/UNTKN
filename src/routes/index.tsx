@@ -1,370 +1,143 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/layout/SiteLayout";
 import { Reveal } from "@/components/Reveal";
-import { ProductCard } from "@/components/shop/ProductCard";
-import {
-  BRAND,
-  categories,
-  editorialImages,
-  featuredProducts,
-  newArrivals,
-} from "@/data/catalog";
-import hero from "@/assets/hero.jpg";
-import posterWide1 from "@/assets/poster-wide-1.jpg";
-import posterWide2 from "@/assets/poster-wide-2.jpg";
-import poster1 from "@/assets/poster-1.jpg";
-import poster2 from "@/assets/poster-2.jpg";
+import { realProductGallery, realProductImages } from "@/lib/real-product-images";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "UNTKN — Considered Fashion for the Modern Wardrobe" },
+      { title: "UNTKN — Original Graphic Clothing" },
       {
         name: "description",
-        content:
-          "Editorial outerwear, knitwear and tailoring in natural fibres. Shop the Autumn collection from UNTKN.",
+        content: "Discover UNTKN through original product and on-location clothing photography.",
       },
-      { property: "og:title", content: "UNTKN — Considered Fashion" },
+      { property: "og:title", content: "UNTKN — Original Graphic Clothing" },
       {
         property: "og:description",
-        content: "Editorial outerwear, knitwear and tailoring in natural fibres.",
+        content: "Discover UNTKN through original product and on-location clothing photography.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,
 });
 
+const galleryAlts = [
+  "White Misery World graphic long-sleeve shirt",
+  "Man wearing the Misery World graphic shirt beside a window",
+  "Man wearing the Misery World graphic shirt while seated",
+  "Man wearing the Misery World graphic shirt against illustrated wall art",
+  "Man wearing the Misery World graphic shirt photographed from above",
+  "White dragon and flame graphic long-sleeve shirt",
+  "Man wearing the dragon and flame graphic shirt against graffiti",
+  "Man wearing the dragon and flame graphic shirt on stairs",
+];
+
 function Home() {
-  const [offset, setOffset] = useState(0);
-  const featured = featuredProducts();
-  const arrivals = newArrivals(4);
-
-  useEffect(() => {
-    const onScroll = () => setOffset(Math.min(window.scrollY, 700));
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <SiteLayout>
-      {/* HERO BANNER */}
-      <section className="relative overflow-hidden bg-secondary/50">
-        <div className="relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[1920/720]">
-          <img
-            src={posterWide1}
-            alt="Two models wearing oversized wool coats"
-            width={1920}
-            height={720}
-            className="absolute inset-0 h-full w-full object-cover object-[88%_center] lg:object-center"
-            style={{ transform: `translate3d(0, ${offset * 0.06}px, 0)` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/10 lg:from-background/85 lg:via-background/20 lg:to-transparent" />
-          <div className="absolute inset-0">
-            <div className="mx-auto flex h-full max-w-[1600px] flex-col justify-center px-5 md:px-10">
-              <div className="max-w-lg">
-                <p className="eyebrow animate-rise text-primary">Autumn / Winter 2026</p>
-                <h1 className="display-xl animate-rise mt-4" style={{ animationDelay: "120ms" }}>
-                  Weight,
-                  <br />
-                  drape, silence
-                </h1>
-                <p
-                  className="animate-rise mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground"
-                  style={{ animationDelay: "240ms" }}
-                >
-                  A collection built around three fabrics and one idea — clothing that
-                  improves with wear.
-                </p>
-                <div
-                  className="animate-rise mt-7 flex flex-wrap gap-3 sm:gap-4"
-                  style={{ animationDelay: "340ms" }}
-                >
-                  <Link
-                    to="/shop"
-                    className="eyebrow bg-primary px-8 py-4 text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5 sm:px-10"
-                  >
-                    Shop collection
-                  </Link>
-                  <Link
-                    to="/lookbook"
-                    className="eyebrow border border-primary/50 px-8 py-4 text-primary transition-colors duration-300 hover:bg-primary hover:text-primary-foreground sm:px-10"
-                  >
-                    Explore lookbook
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* QUICK CATEGORY STRIP */}
-      <section className="border-b border-border bg-secondary/40">
-        <div className="mx-auto flex max-w-[1600px] gap-3 overflow-x-auto px-5 py-5 md:justify-center md:gap-6 md:px-10">
-          {categories.map((c) => (
-            <Link
-              key={c.id}
-              to="/shop"
-              search={{ category: c.slug }}
-              className="eyebrow shrink-0 rounded-full border border-primary/25 bg-background px-5 py-2.5 text-primary transition-colors duration-300 hover:bg-primary hover:text-primary-foreground"
-            >
-              {c.name}
+      <section className="bg-gallery px-5 pb-14 pt-9 md:px-10 md:py-20 lg:py-24">
+        <div className="mx-auto grid max-w-[1380px] items-center gap-8 md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] md:gap-14 lg:gap-24">
+          <div className="relative z-10 min-w-0 md:py-12">
+            <p className="eyebrow animate-rise text-muted-foreground">Original UNTKN photography · 2026</p>
+            <h1 className="animate-rise mt-5 font-editorial font-normal leading-[0.9] md:mt-7" style={{ animationDelay: "100ms" }}>
+              <span className="block text-[4.25rem] sm:text-8xl lg:text-[8.5rem]">UNTKN</span>
+              <span className="mt-5 block max-w-xl text-[2.15rem] italic leading-[0.98] sm:text-5xl md:mt-7 lg:text-6xl">
+                Unknown by Name.
+                <br />
+                <span className="not-italic">Unforgettable by Style.</span>
+              </span>
+            </h1>
+            <p className="mt-6 max-w-sm text-sm leading-6 text-muted-foreground md:mt-8 md:leading-7">
+              Original graphic clothing, photographed on the people who wear it.
+            </p>
+            <Link to="/lookbook" className="group mt-5 inline-flex items-center gap-5 py-3 md:mt-8">
+              <span className="eyebrow">View the lookbook</span>
+              <span className="h-px w-10 bg-foreground transition-[width] duration-500 group-hover:w-20" />
             </Link>
-          ))}
+          </div>
+
+          <Reveal className="relative md:pr-6">
+            <div className="overflow-hidden bg-secondary shadow-[var(--shadow-editorial)]">
+              <img
+                src={realProductImages.miseryPortrait}
+                alt="Man wearing the real UNTKN Misery World graphic long-sleeve shirt"
+                width={768}
+                height={1024}
+                className="aspect-[4/5] w-full object-cover object-center transition-transform duration-1000 hover:scale-[1.015]"
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 border border-border bg-background/95 px-5 py-4 shadow-[var(--shadow-editorial)] backdrop-blur-sm md:-bottom-7 md:-left-12 md:px-8 md:py-5">
+              <p className="eyebrow text-muted-foreground">Campaign 001</p>
+              <p className="mt-2 font-editorial text-xl italic">Misery World</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-
-      {/* FEATURED COLLECTION */}
-      <section className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-28">
-        <Reveal className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="eyebrow text-muted-foreground">Featured collection</p>
-            <h2 className="display-lg mt-4 max-w-xl">The winter overcoat study</h2>
-          </div>
-          <Link to="/shop" className="eyebrow link-underline">
-            View all pieces
-          </Link>
+      <section className="mx-auto max-w-[1380px] border-t border-border px-5 py-14 md:px-10 md:py-32">
+        <Reveal className="mx-auto max-w-4xl text-center">
+          <p className="font-editorial text-[1.75rem] italic leading-[1.08] md:text-5xl md:leading-tight">
+            Clothing should be experienced, not staged. Every frame here belongs to the real UNTKN story.
+          </p>
         </Reveal>
-
-        <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-12 md:mt-14 md:gap-x-6 md:gap-y-14 lg:grid-cols-4">
-          {featured.slice(0, 4).map((p, i) => (
-            <Reveal key={p.id} delay={i * 80}>
-              <ProductCard product={p} index={i} />
+        <div className="-mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:mt-16 md:grid md:grid-cols-3 md:gap-7 md:overflow-visible md:px-0 md:pb-0 lg:gap-12">
+          {[
+            [realProductImages.miseryProduct, "The graphic", "Front artwork, texture and construction in clear view."],
+            [realProductImages.dragonGraffiti, "The attitude", "The dragon and flame piece worn in its natural setting."],
+            [realProductImages.dragonStairs, "The fit", "An honest look at proportion, drape and everyday styling."],
+          ].map(([src, title, copy], index) => (
+            <Reveal key={src} delay={index * 80} className={`w-[78vw] max-w-[310px] shrink-0 snap-start md:w-auto md:max-w-none ${index === 1 ? "md:pt-20" : ""}`}>
+              <div className="image-veil overflow-hidden bg-secondary">
+                <img src={src} alt={copy} loading="lazy" width={768} height={1024} className="aspect-[3/4] w-full object-cover transition-transform duration-1000 hover:scale-[1.025]" />
+              </div>
+              <p className="eyebrow mt-4 md:mt-6">{title}</p>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* EDITORIAL SPLIT */}
       <section className="border-y border-border bg-secondary/40">
-        <div className="mx-auto grid max-w-[1600px] items-stretch gap-0 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[1600px] md:grid-cols-2">
           <Reveal className="image-veil">
             <img
-              src={editorialImages.editorial1}
-              alt="Model in cream knitwear and black tailoring"
+              src={realProductImages.dragonProduct}
+              alt="White long-sleeve shirt with dragon, cloud and flame artwork"
               loading="lazy"
-              width={1200}
-              height={1500}
-              className="h-full w-full object-cover"
+              width={768}
+              height={768}
+              className="aspect-square w-full object-cover md:h-full md:min-h-[420px] md:aspect-auto"
             />
           </Reveal>
-          <Reveal delay={120} className="flex items-center px-5 py-16 md:px-16 md:py-24">
+          <Reveal delay={100} className="flex items-center px-5 py-12 md:px-16 md:py-24">
             <div className="max-w-md">
-              <p className="eyebrow text-muted-foreground">Editorial 01</p>
-              <h2 className="display-lg mt-5">Quiet volume</h2>
+              <p className="eyebrow text-muted-foreground">Product detail</p>
+              <h2 className="display-lg mt-5">Artwork in full view</h2>
               <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-                Proportion does the work. Boxy jersey against fluid wool, rendered in a palette
-                of ecru, stone and ink — photographed in daylight, unstyled.
+                Clean product photography sits alongside real on-body images, so every graphic and fit can be seen clearly.
               </p>
-              <Link to="/lookbook" className="eyebrow link-underline mt-8 inline-block">
-                See the full story
-              </Link>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* NEW ARRIVALS */}
       <section className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-28">
         <Reveal>
-          <p className="eyebrow text-muted-foreground">Just landed</p>
-          <h2 className="display-lg mt-4">New arrivals</h2>
+          <p className="eyebrow text-muted-foreground">UNTKN in frame</p>
+          <h2 className="display-lg mt-4">Real campaign gallery</h2>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-12 md:mt-14 md:gap-x-6 md:gap-y-14 lg:grid-cols-4">
-          {arrivals.map((p, i) => (
-            <Reveal key={p.id} delay={i * 70}>
-              <ProductCard product={p} index={i} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* WIDE SALE POSTER */}
-      <Reveal>
-        <section className="relative overflow-hidden">
-          <div className="relative aspect-[3/2] w-full sm:aspect-[16/7] lg:aspect-[1920/620]">
-            <img
-              src={posterWide2}
-              alt="Knitwear, denim and sneakers arranged on a white surface"
-              loading="lazy"
-              width={1920}
-              height={720}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-l from-background/95 via-background/60 to-transparent" />
-            <div className="absolute inset-0 mx-auto flex max-w-[1600px] items-center justify-end px-5 md:px-10">
-              <div className="max-w-sm text-right">
-                <p className="eyebrow text-primary">Season edit</p>
-                <h2 className="display-lg mt-4">Essentials from ₹1,999</h2>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  Everyday knits, denim and footwear, priced to live in.
-                </p>
-                <Link
-                  to="/shop"
-                  className="eyebrow mt-7 inline-block bg-primary px-9 py-4 text-primary-foreground transition-transform duration-300 hover:-translate-y-0.5"
-                >
-                  Shop the edit
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* POSTER PAIR */}
-      <section className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-24">
-        <Reveal>
-          <p className="eyebrow text-muted-foreground">Campaigns</p>
-          <h2 className="display-lg mt-4">Shop by story</h2>
-        </Reveal>
-        <div className="mt-10 grid gap-5 md:grid-cols-2 md:gap-6">
-          {[
-            {
-              img: poster1,
-              title: "Women",
-              copy: "Soft tailoring & heavy knits",
-              alt: "Woman in cream knit sweater and wide trousers",
-              gender: "women" as const,
-            },
-            {
-              img: poster2,
-              title: "Men",
-              copy: "Coats cut for the cold",
-              alt: "Man in a charcoal overcoat and white shirt",
-              gender: "men" as const,
-            },
-          ].map((p, i) => (
-            <Reveal key={p.title} delay={i * 90}>
-              <Link
-                to="/shop"
-                search={{ gender: p.gender }}
-                className="group relative block overflow-hidden"
-              >
-                <img
-                  src={p.img}
-                  alt={p.alt}
-                  loading="lazy"
-                  width={900}
-                  height={1200}
-                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/70 to-transparent p-6 md:p-8">
-                  <h3 className="display-md text-background">{p.title}</h3>
-                  <p className="mt-2 text-sm text-background/80">{p.copy}</p>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* BRAND STORY */}
-      <section className="border-t border-border">
-        <div className="mx-auto grid max-w-[1600px] gap-0 md:grid-cols-2">
-          <Reveal className="order-2 flex items-center px-5 py-16 md:order-1 md:px-16 md:py-28">
-            <div className="max-w-md">
-              <p className="eyebrow text-muted-foreground">The house</p>
-              <h2 className="display-lg mt-5">Made in small runs</h2>
-              <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-                {BRAND.short} works with four mills across Portugal, Italy and Scotland. Each
-                style is produced in limited quantity, restocked only when the cloth allows.
-              </p>
-              <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-border pt-8">
-                {[
-                  ["04", "Mills"],
-                  ["12", "Styles a year"],
-                  ["100%", "Natural fibres"],
-                ].map(([value, label]) => (
-                  <div key={label}>
-                    <dt className="font-display text-2xl">{value}</dt>
-                    <dd className="eyebrow mt-2 text-muted-foreground">{label}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </Reveal>
-          <Reveal delay={100} className="image-veil order-1 md:order-2">
-            <img
-              src={editorialImages.story}
-              alt="Folded grey linen garments on a plaster surface"
-              loading="lazy"
-              width={1400}
-              height={1000}
-              className="h-full w-full object-cover"
-            />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* CATEGORIES / PROMO */}
-      <section className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-28">
-        <Reveal>
-          <h2 className="display-lg">Browse by category</h2>
-        </Reveal>
-        <div className="mt-12 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-          {categories.map((c, i) => (
-            <Reveal key={c.id} delay={i * 60}>
-              <Link
-                to="/shop"
-                search={{ category: c.slug }}
-                className="flex h-full flex-col justify-between bg-background p-6 transition-colors duration-300 hover:bg-secondary md:p-8"
-              >
-                <span className="display-md">{c.name}</span>
-                <span className="mt-6 text-sm text-muted-foreground md:mt-10">{c.description}</span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* PROMOTIONAL BAND */}
-      <Reveal>
-        <section className="relative overflow-hidden bg-primary text-primary-foreground">
-          <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-8 px-5 py-20 md:flex-row md:items-center md:justify-between md:px-10 md:py-28">
-            <div>
-              <p className="eyebrow opacity-70">Complimentary</p>
-              <h2 className="display-lg mt-4 max-w-xl">
-                Free shipping on orders above ₹9,999
-              </h2>
-            </div>
-            <Link
-              to="/shop"
-              className="eyebrow border border-primary-foreground/60 px-10 py-4 transition-colors duration-300 hover:bg-primary-foreground hover:text-primary"
-            >
-              Shop now
-            </Link>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* SOCIAL GALLERY */}
-      <section className="mx-auto max-w-[1600px] px-5 py-14 md:px-10 md:py-28">
-        <Reveal className="flex items-end justify-between">
-          <h2 className="display-md">@untkn</h2>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="eyebrow link-underline"
-          >
-            Follow
-          </a>
-        </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {[
-            editorialImages.editorial1,
-            editorialImages.editorial2,
-            editorialImages.story,
-            hero,
-          ].map((src, i) => (
-            <Reveal key={i} delay={i * 60} className="image-veil aspect-square">
+        <div className="mt-8 grid grid-cols-2 gap-2 md:mt-10 md:grid-cols-4 md:gap-4">
+          {realProductGallery.map((src, index) => (
+            <Reveal key={src} delay={(index % 4) * 50} className="image-veil">
               <img
                 src={src}
-                alt=""
+                alt={galleryAlts[index] ?? "UNTKN clothing photograph"}
                 loading="lazy"
-                className="h-full w-full object-cover grayscale transition-[filter] duration-700 hover:grayscale-0"
+                width={768}
+                height={1024}
+                className="aspect-[4/5] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
               />
             </Reveal>
           ))}

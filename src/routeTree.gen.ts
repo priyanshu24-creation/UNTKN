@@ -28,7 +28,6 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as ApiPublicProductImageRouteImport } from './routes/api/public/product-image'
-import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -125,12 +124,6 @@ const ApiPublicProductImageRoute = ApiPublicProductImageRouteImport.update({
   path: '/api/public/product-image',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicPaymentsWebhookRoute =
-  ApiPublicPaymentsWebhookRouteImport.update({
-    id: '/api/public/payments/webhook',
-    path: '/api/public/payments/webhook',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -152,7 +145,6 @@ export interface FileRoutesByFullPath {
   '/product/$slug': typeof ProductSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/api/public/product-image': typeof ApiPublicProductImageRoute
-  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -173,7 +165,6 @@ export interface FileRoutesByTo {
   '/product/$slug': typeof ProductSlugRoute
   '/admin': typeof AdminIndexRoute
   '/api/public/product-image': typeof ApiPublicProductImageRoute
-  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -196,7 +187,6 @@ export interface FileRoutesById {
   '/product/$slug': typeof ProductSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/api/public/product-image': typeof ApiPublicProductImageRoute
-  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -220,7 +210,6 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/admin/'
     | '/api/public/product-image'
-    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -241,7 +230,6 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/admin'
     | '/api/public/product-image'
-    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -263,7 +251,6 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/admin/'
     | '/api/public/product-image'
-    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -284,7 +271,6 @@ export interface RootRouteChildren {
   TrackRoute: typeof TrackRoute
   ProductSlugRoute: typeof ProductSlugRoute
   ApiPublicProductImageRoute: typeof ApiPublicProductImageRoute
-  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -422,13 +408,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicProductImageRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/payments/webhook': {
-      id: '/api/public/payments/webhook'
-      path: '/api/public/payments/webhook'
-      fullPath: '/api/public/payments/webhook'
-      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -462,7 +441,6 @@ const rootRouteChildren: RootRouteChildren = {
   TrackRoute: TrackRoute,
   ProductSlugRoute: ProductSlugRoute,
   ApiPublicProductImageRoute: ApiPublicProductImageRoute,
-  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

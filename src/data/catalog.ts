@@ -304,13 +304,13 @@ export const products: Product[] = [
 /* Swap the bodies for API/database calls without changing components. */
 /* ------------------------------------------------------------------ */
 
-export const listProducts = () => products.filter((p) => p.published);
+// Legacy samples remain available only as internal reference data. Customer-facing
+// catalogue helpers intentionally expose nothing until real products are published.
+export const listProducts = (): Product[] => [];
 
-export const getProduct = (slug: string) =>
-  products.find((p) => p.slug === slug && p.published) ?? null;
+export const getProduct = (_slug: string): Product | null => null;
 
-export const getProductById = (id: string) =>
-  products.find((p) => p.id === id) ?? null;
+export const getProductById = (_id: string): Product | null => null;
 
 export const getCategory = (id: string) =>
   categories.find((c) => c.id === id) ?? null;

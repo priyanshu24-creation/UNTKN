@@ -42,6 +42,8 @@ export const Route = createFileRoute("/shop")({
         property: "og:description",
         content: "Outerwear, knitwear and tailoring in natural fibres.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Shop,
@@ -235,7 +237,7 @@ function Shop() {
           </h1>
         </header>
 
-        <div className="mt-8 flex items-center justify-between gap-4">
+        <div className={cn("mt-8 items-center justify-between gap-4", all.length === 0 ? "hidden" : "flex")}>
           <button
             type="button"
             onClick={() => setPanelOpen(true)}
@@ -261,19 +263,16 @@ function Shop() {
           </label>
         </div>
 
-        <div className="mt-10 grid gap-12 lg:grid-cols-[220px_1fr]">
-          <aside className="hidden lg:block">{filters}</aside>
+        <div className={cn("mt-10 gap-12 lg:grid-cols-[220px_1fr]", all.length === 0 ? "block" : "grid")}>
+          {all.length > 0 ? <aside className="hidden lg:block">{filters}</aside> : null}
 
           <div>
             {results.length === 0 ? (
               <div className="border border-border px-8 py-24 text-center">
-                <p className="display-md">No pieces match</p>
+                <p className="display-md">Real pieces coming soon</p>
                 <p className="mt-3 text-sm text-muted-foreground">
-                  Try widening the price range or clearing a filter.
+                  Product details and prices will appear only when the real collection is ready.
                 </p>
-                <button type="button" onClick={clear} className="eyebrow link-underline mt-6">
-                  Clear filters
-                </button>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-x-5 gap-y-14 md:grid-cols-3 xl:grid-cols-4">

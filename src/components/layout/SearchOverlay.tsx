@@ -1,10 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { getCategory, searchProducts, effectivePrice } from "@/data/catalog";
-import { currency } from "@/lib/format";
-
-const SUGGESTIONS = ["Outerwear", "Knitwear", "Wide leg", "Ecru", "Sale"];
 
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
@@ -20,7 +16,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
     };
   }, [open, onClose]);
 
-  const results = useMemo(() => searchProducts(query).slice(0, 6), [query]);
+  const hasQuery = useMemo(() => query.trim().length > 0, [query]);
 
   if (!open) return null;
 
@@ -46,24 +42,11 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
         </label>
 
         <div className="mt-8 flex-1 overflow-y-auto">
-          {!query.trim() ? (
-            <div className="flex flex-wrap gap-3">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => setQuery(s)}
-                  className="eyebrow border border-border px-4 py-2 transition-colors hover:bg-primary hover:text-primary-foreground"
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          ) : results.length === 0 ? (
+          {hasQuery ? (
             <div className="border-t border-border pt-16 text-center">
               <p className="display-md">Nothing found</p>
               <p className="mt-3 text-sm text-muted-foreground">
-                No pieces match “{query}”. Try a category, colour or fabric.
+                Real product details will appear here when the collection is published.
               </p>
               <Link
                 to="/shop"
@@ -74,34 +57,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
               </Link>
             </div>
           ) : (
-            <ul className="divide-y divide-border border-t border-border">
-              {results.map((p) => (
-                <li key={p.id}>
-                  <Link
-                    to="/product/$slug"
-                    params={{ slug: p.slug }}
-                    onClick={onClose}
-                    className="group flex items-center gap-5 py-4"
-                  >
-                    <img
-                      src={p.images[0]}
-                      alt=""
-                      loading="lazy"
-                      className="h-20 w-16 object-cover"
-                    />
-                    <div className="flex-1">
-                      <p className="text-sm tracking-tight group-hover:underline">{p.name}</p>
-                      <p className="eyebrow mt-1 text-muted-foreground">
-                        {getCategory(p.categoryId)?.name}
-                      </p>
-                    </div>
-                    <p className="text-sm tabular-nums">
-                      {currency(effectivePrice(p), p.currency)}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <p className="text-sm text-muted-foreground">The real collection is coming soon.</p>
           )}
         </div>
       </div>

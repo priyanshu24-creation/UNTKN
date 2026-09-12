@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { listProducts } from "@/data/catalog";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
@@ -7,9 +6,7 @@ export const Route = createFileRoute("/sitemap.xml")({
       GET: async ({ request }) => {
         const origin = new URL(request.url).origin;
         const staticPaths = ["/", "/shop", "/lookbook", "/about", "/login", "/register"];
-        const productPaths = listProducts().map((p) => `/product/${p.slug}`);
-
-        const urls = [...staticPaths, ...productPaths]
+        const urls = staticPaths
           .map(
             (path) =>
               `  <url><loc>${origin}${path}</loc><changefreq>weekly</changefreq></url>`,

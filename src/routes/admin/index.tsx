@@ -100,12 +100,14 @@ function Admin() {
         if (!cancelled) setIsAdmin(false);
         return;
       }
-      const { data, error } = await supabase.rpc("has_role", {
-        _user_id: user.id,
-        _role: "admin",
-      });
+      const { data, error } = await supabase
+        .from("user_roles")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("role", "admin")
+        .maybeSingle();
       if (cancelled) return;
-      setIsAdmin(!error && data === true);
+      setIsAdmin(!error && Boolean(data));
     })();
     return () => {
       cancelled = true;

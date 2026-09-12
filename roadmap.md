@@ -1,2 +1,5 @@
 - [x] Remove monkey from account creation page
 - [x] Restore a simple, classy registration layout
+- [x] Remove generated fashion imagery and hide all sample products and prices
+- [x] Use only the eight uploaded real clothing photos on customer-facing pages
+- [x] Replace the homepage headline with the approved UNTKN brand statement
