@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npm run build",
+  "startCommand": "npm start",
+  "nodeVersion": "20.11.0",
+  "buildDirectory": "dist",
+  "entryFile": "dist/server/index.js"
+}
