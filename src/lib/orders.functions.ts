@@ -102,7 +102,7 @@ export const placeOrder = createServerFn({ method: "POST" })
         status: "pending",
         payment_status: data.paymentMethod === "cod" ? "awaiting_payment" : "awaiting_payment",
         payment_method: data.paymentMethod,
-        payment_provider: data.paymentMethod === "cod" ? "cash_on_delivery" : null,
+        payment_provider: data.paymentMethod === "cod" ? "cash_on_delivery" : "razorpay",
       } as never)
       .select("id, number, created_at")
       .single();

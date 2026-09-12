@@ -14,6 +14,27 @@ import {
 } from "@/lib/orders.functions";
 import { useShop } from "@/store/shop";
 
+declare global {
+  interface Window {
+    Razorpay?: new (options: {
+      key: string;
+      amount: number;
+      currency: string;
+      name: string;
+      description: string;
+      order_id: string;
+      prefill: { name: string; email: string; contact: string };
+      theme: { color: string };
+      handler: (response: {
+        razorpay_order_id: string;
+        razorpay_payment_id: string;
+        razorpay_signature: string;
+      }) => void;
+      modal: { ondismiss: () => void };
+    }) => { open: () => void };
+  }
+}
+
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
@@ -82,10 +103,23 @@ function Checkout() {
   const { cart, subtotal, clearCart, setLastOrder, hydrated } = useShop();
   const navigate = useNavigate();
   const submitOrder = useServerFn(placeOrder);
+  const openRazorpayOrder = useServerFn(createRazorpayOrder);
+  const verifyPayment = useServerFn(verifyRazorpayPayment);
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(initialForm);
   const [method, setMethod] = useState<"cod" | "online">("cod");
   const [busy, setBusy] = useState(false);
+
+  const loadRazorpay = async () => {
+    if (window.Razorpay) return;
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Could not load payment gateway."));
+      document.head.appendChild(script);
+    });
+  };
 
   const shipping = subtotal > 0 && subtotal < FREE_SHIPPING_ABOVE ? SHIPPING_FLAT : 0;
   const codFee = method === "cod" ? COD_FEE : 0;
@@ -120,7 +154,9 @@ function Checkout() {
         },
       });
 
-      setLastOrder({
+      let paymentStatus: "awaiting_payment" | "paid" = "awaiting_payment";
+      let paymentReference: string | null = null;
+      const localOrder = {
         id: result.id,
         number: result.number,
         customerName: form.fullName,
@@ -132,18 +168,57 @@ function Checkout() {
         discount: 0,
         total: result.total,
         status: "pending",
-        paymentStatus: "awaiting_payment",
+        paymentStatus,
         paymentMethod: result.paymentMethod,
         paymentProvider: result.paymentMethod === "cod" ? "cash_on_delivery" : PAYMENT_PROVIDER,
-        paymentReference: null,
+        paymentReference,
         shippingAddress: result.shippingAddress,
         estimatedDelivery: result.estimatedDelivery,
-      });
+      };
+
+      if (method === "online") {
+        await loadRazorpay();
+        const gateway = await openRazorpayOrder({ data: { orderId: result.id } });
+        if (!window.Razorpay) throw new Error("Payment gateway is unavailable.");
+        await new Promise<void>((resolve, reject) => {
+          const razorpay = new window.Razorpay!({
+            key: gateway.keyId,
+            amount: gateway.amount,
+            currency: gateway.currency,
+            name: gateway.name,
+            description: gateway.description,
+            order_id: gateway.orderId,
+            prefill: { name: form.fullName, email: form.email, contact: form.phone },
+            theme: { color: "#111111" },
+            handler: async (response) => {
+              try {
+                await verifyPayment({
+                  data: {
+                    orderId: result.id,
+                    razorpayOrderId: response.razorpay_order_id,
+                    razorpayPaymentId: response.razorpay_payment_id,
+                    razorpaySignature: response.razorpay_signature,
+                  },
+                });
+                paymentStatus = "paid";
+                paymentReference = response.razorpay_payment_id;
+                resolve();
+              } catch (error) {
+                reject(error);
+              }
+            },
+            modal: { ondismiss: () => reject(new Error("Payment was cancelled.")) },
+          });
+          razorpay.open();
+        });
+      }
+
+      setLastOrder({ ...localOrder, paymentStatus, paymentReference });
       clearCart();
       toast.success(
         method === "cod"
           ? `Order ${result.number} placed. Pay in cash when it arrives.`
-          : `Order ${result.number} placed and held for payment.`,
+          : `Payment confirmed for order ${result.number}.`,
       );
       void navigate({ to: "/order-confirmation" });
     } catch {
