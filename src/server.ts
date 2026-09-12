@@ -1,5 +1,8 @@
 import "./lib/error-capture";
 
+import { createServer } from "node:http";
+import { Readable } from "node:stream";
+
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
@@ -44,7 +47,7 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
-export default {
+const server = {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
@@ -59,3 +62,34 @@ export default {
     }
   },
 };
+
+export default server;
+
+const nodeServer = createServer(async (request, response) => {
+  try {
+    const method = request.method ?? "GET";
+    const body = method === "GET" || method === "HEAD" ? undefined : (Readable.toWeb(request) as ReadableStream);
+    const fetchRequest = new Request(`http://${request.headers.host ?? "localhost"}${request.url ?? "/"}`, {
+      method,
+      headers: request.headers as HeadersInit,
+      body,
+      duplex: "half",
+    } as RequestInit);
+    const fetchResponse = await server.fetch(fetchRequest, undefined, undefined);
+
+    response.statusCode = fetchResponse.status;
+    fetchResponse.headers.forEach((value, key) => response.setHeader(key, value));
+    if (fetchResponse.body) {
+      Readable.fromWeb(fetchResponse.body as ReadableStream).pipe(response);
+    } else {
+      response.end();
+    }
+  } catch (error) {
+    console.error(error);
+    response.statusCode = 500;
+    response.end(renderErrorPage());
+  }
+});
+
+const port = Number.parseInt(process.env.PORT ?? "3000", 10);
+nodeServer.listen(port, "0.0.0.0");
